@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        Segundo Template, funcionando
+    </h1>
+    <h2>{{fecha_actual}}</h2>
+    <ul>
+        <li>Esto es una li de ul DESORDENADA</li>
+    </ul>
+    <ol>
+        <li>Esto es una li de ol ORDENADA</li>
+    </ol>
+    <p>LISTADOS -> Con {}%% puedo usar funciones de python y entre {} se usan variables</p>
+    <ul> 
+        {% for num in numeros  %}
+        <li>{{num}}</li>
+        {% endfor%}
+    </ul>
+</body>
+</html>
