@@ -1,20 +1,14 @@
 from django.http import HttpResponse
 from django.template import Template, Context, loader
 from datetime import datetime
-from django.shortcuts import render
-from inicio.models import Auto
-
-
-def mi_vista(request):
-    return HttpResponse('Hola Romi, Te AMO')
+from django.shortcuts import render, redirect
+from inicio.models import Auto,Alumno
+from inicio.forms import CrearAlumnoFormulario,BuscarAlumnoFormulario
 
 def inicio (request):
     #return HttpResponse('<h1> Pantalla Principal </h1)')
     return render(request, 'index.html')
 
-def vista_datos1(request,nombre):
-    nombre_mayuscula = nombre.upper()
-    return HttpResponse(f'Hola {nombre_mayuscula}, te saludo en vista de datos')
 
 def primer_template(request):
     
@@ -54,8 +48,30 @@ def segundo_template(request):
     #   v3
     return render(request, 'segundo_template.html',datos)
 
-def crear_auto(request):
+def crear_auto(request,marca,modelo,anio):
     
-    auto= Auto(marca='Fiat', modelo='Uno', anio=2015)
+    auto= Auto(marca=marca, modelo=modelo, anio=anio)
     auto.save()
-    return render(request, 'creacion_auto_correcta.html', {})
+    return render(request, 'primer_template.html', {})
+
+def buscar_alumno(request):
+    formulario=BuscarAlumnoFormulario(request.GET)
+    if formulario.is_valid():
+        apellido=formulario.cleaned_data.get('apellido').capitalize()
+        alumnos=Alumno.objects.filter(apellido__icontains=apellido)
+    else:
+        alumnos=Auto.objects.all()
+    
+    return render(request, 'buscar_alumno.html', {'alumnos':alumnos,'form':formulario})
+
+def crear_alumno(request):
+    formulario=CrearAlumnoFormulario()
+    if request.method=='POST':
+        formulario= CrearAlumnoFormulario(request.POST)
+        if formulario.is_valid():
+            data=formulario.cleaned_data
+            alumno=Alumno(nombre=data.get('nombre'),apellido=data.get('apellido'),nota=data.get('nota'))
+            alumno.save()  
+            return redirect('crear_alumno')#Puedo dirigir a otro template
+        
+    return render(request, 'crear_alumno.html', {'form':formulario})

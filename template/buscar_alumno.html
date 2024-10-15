@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_head %}
+BUSCADOR DE ALUMNOS
+{% endblock %}
+
+{% block presentacion %}
+<h1 class="mb-5">BUSCADOR DE ALUMNOS</h1>
+{% endblock %}
+
+{% block main %}
+<h1>Menu para BUSCAR un alumno y en la base de datos</h1>
+<h4>------</h4>
+<h3>Si desea puede filtrar por apellido los alumnos en la Base de datos</h3>
+
+
+<form action="">
+    {{form}}
+    <input type="submit">
+</form>
+
+{% if alumnos %}
+<p>Presione enviar para ver lista de alumno</p>
+</ul>
+
+<ul>
+    {% for alumno in alumnos %}
+    <li>{{alumno}}
+    </li>
+    {% endfor %}     
+{% else %}
+<p>
+    <h1>Usted No tiene Alumnos creados en la BDD</h1>
+    <h3>Por favor cree un alumno para comenzar</h3>
+</p>
+
+{% endif %}
+
+{% endblock %}
