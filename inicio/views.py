@@ -3,7 +3,7 @@ from django.template import Template, Context, loader
 from datetime import datetime
 from django.shortcuts import render, redirect
 from inicio.models import Auto,Alumno
-from inicio.forms import CrearAlumnoFormulario,BuscarAlumnoFormulario
+from inicio.forms import CrearAlumnoFormulario,BuscarAlumnoFormulario,EditarAlumnoFormulario
 
 def inicio (request):
     #return HttpResponse('<h1> Pantalla Principal </h1)')
@@ -75,3 +75,28 @@ def crear_alumno(request):
             return redirect('crear_alumno')#Puedo dirigir a otro template
         
     return render(request, 'crear_alumno.html', {'form':formulario})
+
+def ver_alumno(request, id):
+    alumno = Alumno.objects.get(id=id)
+    return render(request, 'ver_alumno.html', {'alumno':alumno})
+
+def eliminar_alumno(request, id):
+    alumno = Alumno.objects.get(id=id)
+    alumno.delete()
+    return redirect('buscar_alumno')
+
+def editar_alumno(request, id):
+    alumno = Alumno.objects.get(id=id)
+    
+    formulario = EditarAlumnoFormulario(initial={'nombre':alumno.nombre,'apellido':alumno.apellido,'nota':alumno.nota})
+    
+    if request.method == "POST":
+        formulario=EditarAlumnoFormulario(request.POST)
+        if formulario.is_valid():
+            alumno.nombre=formulario.cleaned_data.get('nombre')
+            alumno.apellido=formulario.cleaned_data.get('apellido')
+            alumno.nota=formulario.cleaned_data.get('nota')
+            
+            alumno.save()
+        return redirect('buscar_alumno')
+    return render(request,'editar_alumno.html', {'alumno':alumno,'form':formulario})

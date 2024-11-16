@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title_head %}
+VER ALUMNOS
+{% endblock %}
+
+{% block presentacion %}
+<h1 class="mb-5">{{alumno.nombre}} {{alumno.apellido}}</h1>
+{% endblock %}
+
+{% block main %}
+<ul>
+    <li>Nombre: {{alumno.nombre}}</li>
+    <li>Apellido: {{alumno.apellido}}</li>
+    <li>Nota: {{alumno.nota}}</li>
+
+</ul>
+
+
+{% endblock %}

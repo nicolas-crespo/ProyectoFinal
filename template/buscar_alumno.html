@@ -26,7 +26,10 @@ BUSCADOR DE ALUMNOS
 
 <ul>
     {% for alumno in alumnos %}
-    <li>{{alumno}}
+    <li>{{alumno}} / 
+    <a href={% url "ver_alumno"  alumno.id %}> Ver Mas</a>
+    / <a href={% url "editar_alumno"  id=alumno.id %}> Editar</a>
+    / <a href={% url "eliminar_alumno"  id=alumno.id %}> Eliminar</a>
     </li>
     {% endfor %}     
 {% else %}

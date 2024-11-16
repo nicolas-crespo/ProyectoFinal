@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title_head %}
+EDITOR DE ALUMNOS
+{% endblock %}
+
+{% block presentacion %}
+<h1 class="mb-5">Puede modificar Alumnos en la BDD</h1>
+{% endblock %}
+
+{% block main %}
+<h3>
+    Modifique el nombre, apellido y nota del alumno para ingresar en la Base de datos
+</h3>
+<h5>
+    Luego presione GUARDAR
+</h5>
+
+<form action={% url "editar_alumno" id=alumno.id %} method="POST">
+    {% csrf_token %}
+    {{form}}
+    <button>GUARDAR</button>
+</form>
+
+
+{% endblock %}
