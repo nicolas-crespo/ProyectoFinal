@@ -4,6 +4,7 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from inicio.models import Auto,Alumno
 from inicio.forms import CrearAlumnoFormulario,BuscarAlumnoFormulario,EditarAlumnoFormulario
+from django.contrib.auth.decorators import login_required
 
 def inicio (request):
     #return HttpResponse('<h1> Pantalla Principal </h1)')
@@ -76,15 +77,18 @@ def crear_alumno(request):
         
     return render(request, 'crear_alumno.html', {'form':formulario})
 
+@login_required
 def ver_alumno(request, id):
     alumno = Alumno.objects.get(id=id)
     return render(request, 'ver_alumno.html', {'alumno':alumno})
 
+@login_required
 def eliminar_alumno(request, id):
     alumno = Alumno.objects.get(id=id)
     alumno.delete()
     return redirect('buscar_alumno')
 
+@login_required
 def editar_alumno(request, id):
     alumno = Alumno.objects.get(id=id)
     

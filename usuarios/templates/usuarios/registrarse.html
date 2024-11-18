@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title_head %}
+Proyecto Final Crespo Py
+{% endblock %}
+
+{% block presentacion %}
+<h1 class="mb-5">Registrarse</h1>
+{% endblock %}
+
+{% block main %}
+
+<form action={% url "usuarios:registrarse" %} method="post">
+    {% csrf_token %}
+    {{form}}
+    <input type="submit" value="Registrarse">
+
+</form>
+
+{% endblock %}
